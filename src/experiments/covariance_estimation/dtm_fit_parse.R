@@ -13,15 +13,15 @@ if (lambda==0){
   lambda='hp'
 }
 filenam=paste0('i',i,'lambda',lambda,'.RData')
-source(paste0(WORK_DIR,"/LTN_analysis/src/utility/utility.R"))
-source(paste0(WORK_DIR,"/LTN_analysis/src/experiments/covariance_estimation/gibbs.R"))
-result_dir=paste0(WORK_DIR,"/LTN_analysis/results/covariance_estimation/dtm/")
+source(paste0(WORK_DIR,"/src/utility/utility.R"))
+source(paste0(WORK_DIR,"/src/experiments/covariance_estimation/gibbs.R"))
+result_dir=paste0(WORK_DIR,"/results/covariance_estimation/dtm/")
 system(paste0('mkdir ',result_dir,'gibbs/'))
 system(paste0('mkdir ',result_dir,'clrcov/'))
 system(paste0('mkdir ',result_dir,'SSS/'))
-datadir=paste0(WORK_DIR,'/LTN_analysis/cache/dtm/')
+datadir=paste0(WORK_DIR,'/cache/dtm/')
 if (!file.exists(paste0(result_dir,'gibbs/',filenam))){
-  input_data=readRDS(paste0(WORK_DIR,"/LTN_analysis/cache/ps_sim.RData"))
+  input_data=readRDS(paste0(WORK_DIR,"/cache/ps_sim.RData"))
   tree=input_data$tree
   dat_i=readRDS(paste0(datadir,'sim',i,'.RData'))
   yyl=dat_i[1:2]

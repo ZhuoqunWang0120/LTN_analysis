@@ -4,8 +4,8 @@ library(ape)
 library(data.tree)
 argv=commandArgs(TRUE)
 WORK_DIR=argv[1]
-if (!file.exists(paste0(WORK_DIR,"/LTN_analysis/cache/ps_otu50.RData"))){
-  raw_data = read.csv(paste0(WORK_DIR,"/LTN_analysis/res/diabimmune_t1d_16s_otu_table.txt"), sep = "\t", row.names = 1 )
+if (!file.exists(paste0(WORK_DIR,"/cache/ps_otu50.RData"))){
+  raw_data = read.csv(paste0(WORK_DIR,"/res/diabimmune_t1d_16s_otu_table.txt"), sep = "\t", row.names = 1 )
   otutab0=apply(as.matrix(raw_data[,-ncol(raw_data)]),1:2,as.numeric)
   rownames(otutab0)=rownames(raw_data)
   colnames(otutab0)=colnames(raw_data)[-ncol(raw_data)]
@@ -57,13 +57,13 @@ if (!file.exists(paste0(WORK_DIR,"/LTN_analysis/cache/ps_otu50.RData"))){
   otutab100=otu_table(ps100)[otu_preorder,]
   taxtab100=tax100[otu_preorder,]
   ps100=phyloseq(otu_table(t(otutab100),taxa_are_rows = F),tax_table(taxtab100),phylotree)
-  load(paste0(WORK_DIR,"/LTN_analysis/res/diabimmune_t1d_16s_metadata.rdata")) # md_16S
+  load(paste0(WORK_DIR,"/res/diabimmune_t1d_16s_metadata.rdata")) # md_16S
   rownames(md_16S)=as.character(md_16S$G_id)
   md_16S=md_16S[rownames(otu_table(ps100)),]
   ps100=merge_phyloseq(ps100,sample_data(md_16S))
-  saveRDS(ps100,paste0(WORK_DIR,"/LTN_analysis/cache/ps_otu100.RData"))
+  saveRDS(ps100,paste0(WORK_DIR,"/cache/ps_otu100.RData"))
   # ra=apply(otutab100,2,function(x){x/sum(x)})
   otu50=names(sort(rowSums(ra),decreasing = T)[1:50])
   ps50=prune_taxa(otu50,ps100)
-  saveRDS(ps50,paste0(WORK_DIR,"/LTN_analysis/cache/ps_otu50.RData"))
+  saveRDS(ps50,paste0(WORK_DIR,"/cache/ps_otu50.RData"))
 }

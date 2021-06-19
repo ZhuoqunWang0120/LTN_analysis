@@ -2,12 +2,12 @@
 
 argv=commandArgs(TRUE)
 WORK_DIR=argv[1]
-source(paste0(WORK_DIR,"/LTN_analysis/src/utility/utility.R"))
+source(paste0(WORK_DIR,"/src/utility/utility.R"))
 library(phyloseq)
 library(ggplot2)
 library(reshape2)
 library(gridExtra)
-psotu50=readRDS(paste0(WORK_DIR,"/LTN_analysis/cache/ps_otu50.RData"))
+psotu50=readRDS(paste0(WORK_DIR,"/cache/ps_otu50.RData"))
 md_16S=sample_data(psotu50)
 # for simulation, keep finland samples in control group, only adjust for age
 samples_finland_control=rownames(md_16S)[md_16S$Case_Control=='control' & md_16S$Country=='Finland']
@@ -27,4 +27,4 @@ tree$Set(name=51:99,traversal = 'pre-order',filterFun = isNotLeaf)
 tree=as.phylo(tree)
 ra50=apply(cnt, 1, function(x){x/sum(x)})
 top20_ra=names(sort(rowSums(ra50),decreasing = T)[1:20])
-saveRDS(list(cnt=cnt,Xadjust=Xadjust,grouplabel=grouplabel,g=g,gprior_m=gprior_m,tree=tree,top20_ra=top20_ra),paste0(WORK_DIR,"/LTN_analysis/cache/ps_sim.RData"))
+saveRDS(list(cnt=cnt,Xadjust=Xadjust,grouplabel=grouplabel,g=g,gprior_m=gprior_m,tree=tree,top20_ra=top20_ra),paste0(WORK_DIR,"/cache/ps_sim.RData"))
