@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 
-library(GetoptLong)
-library(mvtnorm)
+library(GetoptLong,quietly = T)
+library(mvtnorm,quietly = T)
 GetoptLong(
   "i=i","random seed of simulation.",
   "niter=i","number of Gibbs iterations.",

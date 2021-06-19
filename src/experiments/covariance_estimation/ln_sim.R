@@ -1,6 +1,7 @@
 #!/usr/bin/env Rscript
-library(philr)
-library(mvtnorm)
+
+library(philr,quietly = T)
+library(mvtnorm,quietly = T)
 argv=commandArgs(TRUE)
 WORK_DIR=argv[1]
 SEED=as.numeric(argv[2])

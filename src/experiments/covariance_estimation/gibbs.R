@@ -1,10 +1,10 @@
 #!/usr/bin/env Rscript
 
-library(mvtnorm)
-library(BayesLogit)
-library(LaplacesDemon)
-library(statmod)
-library(VGAM)
+library(mvtnorm,quietly = T)
+library(BayesLogit,quietly = T)
+library(LaplacesDemon,quietly = T)
+library(statmod,quietly = T)
+library(VGAM,quietly = T)
 
 # INPUT:
 # niter -- number of Gibbs iterations

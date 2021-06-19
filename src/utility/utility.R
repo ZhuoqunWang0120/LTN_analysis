@@ -1,14 +1,14 @@
 #!/usr/bin/env Rscript
 
-library(ape)
-library(data.tree)
-library(mvtnorm)
-library(data.tree)
-library(BayesLogit)
-library(LaplacesDemon)
-library(statmod)
-library(VGAM)
-library(philr)
+library(ape,quietly = T)
+library(data.tree,quietly = T)
+library(mvtnorm,quietly = T)
+library(data.tree,quietly = T)
+library(BayesLogit,quietly = T)
+library(LaplacesDemon,quietly = T)
+library(statmod,quietly = T)
+library(VGAM,quietly = T)
+library(philr,quietly = T)
 
 
 clrcov_dtm_sim_log=function(nsim,tree,theta,tau,SSS=1,savesamp=F,dir=NULL){
