@@ -24,7 +24,7 @@ GetoptLong(
   "nu=i","hyperparameter nu.",
   "niter=i","number of iterations.",
   "reff!","whether to include random effects in addition to factors.",
-  "reffcov=i","random effect covariance.",
+  "reffcov=i","random effect covariance, 1: diagonal, 2: sparse.",
   "pi_only!","whether to only save gibbs samples of pi.",
   "gm=f","m in gprior.",
   "pnull=f","prior probability of joint H0.",
