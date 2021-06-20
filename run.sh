@@ -44,7 +44,7 @@ for h in `seq 0 1`;do
 done
 done
 
-declare -a lamvec=(0 0.1 1 1.7782794 3.1622777 5.6234133 10 17.7827941 31.6227766 100 1000)
+declare -a lamvec=(0 0.1 1 1.7782794 3.1622777 5.6234133 10 17.7827941 31.6227766 100)
 for i in `seq 1 $nsim2`; do
 echo "fitting LTN on cross-group comparison simulation "$i
 for h in `seq 0 1`;do
@@ -57,3 +57,10 @@ done
 done
 done
 
+# application
+declare -a lamvec=(0.1 1 10)
+for lambda in "${lamvec[@]}";do
+for i in `seq 1 9`; do
+$WORK_DIR/src/experiments/application/application.R $WORK_DIR 10000 $i 2 $lambda
+done
+done

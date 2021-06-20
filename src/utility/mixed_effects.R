@@ -182,7 +182,6 @@ gibbs_crossgroup = function(N,
   ACC1 = rep(0, niter)
   ACC2 = rep(0, niter)
   for (it in 2:niter) {
-    print(it)
     if (reff) {
       # update gam
       if (reffcov == 1) {
@@ -455,7 +454,6 @@ psi_mle = function(yl, y) {
   psi = qlogis(ratio)
   return(psi)
 }
-# a function called in gibbs sampler
 # a function called in gibbs sampler
 rpg0 = function(h, z) {
   h = as.numeric(h)

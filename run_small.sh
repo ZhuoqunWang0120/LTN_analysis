@@ -13,7 +13,7 @@ $WORK_DIR/src/data/process_data_otu50.R $WORK_DIR
 $WORK_DIR/src/data/process_data_simulation.R $WORK_DIR
 $WORK_DIR/src/data/process_data_application.R $WORK_DIR
 $WORK_DIR/src/data/dtm_data.R $WORK_DIR
-$WORK_DIR/src/experiments/covariance_estimation/dtm_clrcov.R $WORK_DIR 1000000
+$WORK_DIR/src/experiments/covariance_estimation/dtm_clrcov.R $WORK_DIR 10
 
 # covariance estimation
 echo "generating datasets for covariance estimation"
@@ -24,13 +24,13 @@ for i in `seq 1 $nsim1`; do
     done
 done
 
-declare -a lamvec=(0 0.1 1 10)
+declare -a lamvec=(0 10)
 for lambda in "${lamvec[@]}";do
 for i in `seq 1 $nsim1`; do
     echo "fitting LTN on covariance simulation "$i
-    $WORK_DIR/src/experiments/covariance_estimation/dtm_fit_parse.R --i $i --niter 10000 --nmc 1000000 --lambda $lambda --WORK_DIR $WORK_DIR
+    $WORK_DIR/src/experiments/covariance_estimation/dtm_fit_parse.R --i $i --niter 10 --nmc 10 --lambda $lambda --WORK_DIR $WORK_DIR
 for j in `seq 1 3`;do
-    $WORK_DIR/src/experiments/covariance_estimation/ln_fit_parse.R --SEED $i --modelCov $j --niter 10000 --nmc 1000000 --lambda $lambda --WORK_DIR $WORK_DIR
+    $WORK_DIR/src/experiments/covariance_estimation/ln_fit_parse.R --SEED $i --modelCov $j --niter 10 --nmc 10 --lambda $lambda --WORK_DIR $WORK_DIR
 done
 done
 done
@@ -44,16 +44,23 @@ for h in `seq 0 1`;do
 done
 done
 
-declare -a lamvec=(0 0.1 1 1.7782794 3.1622777 5.6234133 10 17.7827941 31.6227766 100 1000)
+declare -a lamvec=(0 10)
 for i in `seq 1 $nsim2`; do
 echo "fitting LTN on cross-group comparison simulation "$i
 for h in `seq 0 1`;do
-$WORK_DIR/src/experiments/cross_group_comparison/fit.R --h $h --niter 10000 --reff --reffcov 1 --pi_only --lambda 0 --i $i --s single_otu --WORK_DIR $WORK_DIR
-$WORK_DIR/src/experiments/cross_group_comparison/fit.R --h $h --niter 10000 --reff --reffcov 1 --pi_only --lambda 0 --i $i --s multi_otu --WORK_DIR $WORK_DIR
+$WORK_DIR/src/experiments/cross_group_comparison/fit.R --h $h --niter 10 --reff --reffcov 1 --pi_only --lambda 0 --i $i --s single_otu --WORK_DIR $WORK_DIR
+$WORK_DIR/src/experiments/cross_group_comparison/fit.R --h $h --niter 10 --reff --reffcov 1 --pi_only --lambda 0 --i $i --s multi_otu --WORK_DIR $WORK_DIR
 for lambda in "${lamvec[@]}";do
-$WORK_DIR/src/experiments/cross_group_comparison/fit.R --h $h --niter 10000 --reff --reffcov 2 --pi_only --lambda $lambda --i $i --s single_otu --WORK_DIR $WORK_DIR
-$WORK_DIR/src/experiments/cross_group_comparison/fit.R --h $h --niter 10000 --reff --reffcov 2 --pi_only --lambda $lambda --i $i --s multi_otu --WORK_DIR $WORK_DIR
+$WORK_DIR/src/experiments/cross_group_comparison/fit.R --h $h --niter 10 --reff --reffcov 2 --pi_only --lambda $lambda --i $i --s single_otu --WORK_DIR $WORK_DIR
+$WORK_DIR/src/experiments/cross_group_comparison/fit.R --h $h --niter 10 --reff --reffcov 2 --pi_only --lambda $lambda --i $i --s multi_otu --WORK_DIR $WORK_DIR
 done
 done
 done
 
+# application
+declare -a lamvec=(0.1 1 10)
+for lambda in "${lamvec[@]}";do
+for i in `seq 1 9`; do
+$WORK_DIR/src/experiments/application/application.R $WORK_DIR 10 $i 2 $lambda
+done
+done
