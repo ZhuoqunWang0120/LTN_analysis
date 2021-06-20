@@ -23,9 +23,6 @@ input_data=readRDS(paste0(WORK_DIR,"/cache/ps_sim.RData"))
 tree=input_data$tree
 datadir=paste0(WORK_DIR,'/cache/ln/')
 result_dir=paste0(WORK_DIR,"/results/covariance_estimation/ln/")
-system(paste0('mkdir -p ',result_dir,'/gibbs/'))
-system(paste0('mkdir -p ',result_dir,'/clrcov/'))
-system(paste0('mkdir -p ',result_dir,'/SSS/'))
 filenam=paste0('i',SEED,'_',modelcov,'_lambda',lambda,'.RData')
 yyl=readRDS(paste0(datadir,modelcov,'yyl_',SEED,'.RData'))
 Y=yyl$Y
@@ -34,17 +31,13 @@ N=nrow(Y)
 p=ncol(Y)
 K=p+1
 SSS=1
-if (!file.exists(paste0(result_dir,'/clrcov/',filenam))){
+if (!file.exists(paste0(result_dir,filenam))){
   st1<-system.time(t<-try(gibbs1<-gibbs_glasso(niter=niter,YL=t(YL),Y=t(Y),r=1,s=0.01,SSS=1,lambda=lambda)))
   while("try-error" %in% class(t)) {
     SSS=SSS+1
     warning('numerical issues')
     t<-try(gibbs1<-gibbs_glasso(niter=niter,YL=t(YL),Y=t(Y),r=1,s=0.01,SSS=SSS,lambda=lambda))
   }
-  if (SSS>1){
-    saveRDS(SSS,paste0(result_dir,'SSS/',filenam))
-  }
-  saveRDS(gibbs1,paste0(result_dir,'gibbs/',filenam))
   samp_seq=(niter/2+1):niter
   MU=gibbs1$MU
   OMEGA=gibbs1$OMEGA
@@ -52,10 +45,9 @@ if (!file.exists(paste0(result_dir,'/clrcov/',filenam))){
   omega=Reduce('+',OMEGA[samp_seq])/length(OMEGA[samp_seq])
   sigma=solve(omega)
   rm(gibbs1)
-  
   st2<-system.time(clrcov_ltn<-clrcov_sim_log(mu,sigma,tree,nmc,F,NULL))
   if (sum(is.na(clrcov_ltn))+sum(is.infinite(clrcov_ltn))==0){
-    saveRDS(clrcov_ltn,paste0(result_dir,'clrcov/',filenam))
+    saveRDS(clrcov_ltn,paste0(result_dir,filenam))
   } else {
     warning('NA or Inf in clrcov')
   }

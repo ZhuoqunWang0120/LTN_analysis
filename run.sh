@@ -2,7 +2,6 @@
 
 nsim1=$1
 nsim2=$2
-mkdir $WORK_DIR/results
 mkdir $WORK_DIR/cache
 mkdir -p $WORK_DIR/results/covariance_estimation/dtm
 mkdir -p $WORK_DIR/results/covariance_estimation/ln
@@ -33,6 +32,7 @@ for j in `seq 1 3`;do
     $WORK_DIR/src/experiments/covariance_estimation/ln_fit_parse.R --SEED $i --modelCov $j --niter 10000 --nmc 1000000 --lambda $lambda --WORK_DIR $WORK_DIR
 done
 done
+$WORK_DIR/src/experiments/covariance_estimation/collect_results.R $WORK_DIR $lambda $nsim1
 done
 
 # cross-group comparison
@@ -57,10 +57,18 @@ done
 done
 done
 
+for lambda in "${lamvec[@]}";do
+$WORK_DIR/src/experiments/cross_group_comparison/collect_results.R $WORK_DIR $lambda
+done
+
 # application
 declare -a lamvec=(0.1 1 10)
 for lambda in "${lamvec[@]}";do
 for i in `seq 1 9`; do
 $WORK_DIR/src/experiments/application/application.R $WORK_DIR 10000 $i 2 $lambda
 done
+$WORK_DIR/src/experiments/application/collect_results.R $WORK_DIR $lambda
 done
+
+
+

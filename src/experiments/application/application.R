@@ -19,6 +19,7 @@ datadir=paste0(WORK_DIR,"/cache/")
 resdir=paste0(WORK_DIR,"/results/application/")
 system(paste0('mkdir -p ',resdir,'/pmap'))
 system(paste0('mkdir -p ',resdir,'/pjap'))
+system(paste0('mkdir -p ',resdir,'/alpha'))
 input_data=readRDS(paste0(datadir,'application_',covariate,'.RData'))
 cnt=input_data$cnt
 tree=input_data$tree
@@ -51,4 +52,6 @@ all0=rowSums(BETAMAT1[(niter/2):niter,]!=0)
 all0freq=sum(all0==0)/(niter/2+1)
 sum0=1-mean(all0)/p
 saveRDS(list(pjap=1-all0freq,sum0=sum0),paste0(resdir,'/pjap/',filenam))
+beta1hat=apply(BETAMAT1[(niter/2):niter,],2,mean)
+saveRDS(beta1hat,paste0(resdir,'/alpha/',filenam))
 }

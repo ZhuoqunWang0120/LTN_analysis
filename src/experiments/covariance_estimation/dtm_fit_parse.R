@@ -16,11 +16,8 @@ filenam=paste0('i',i,'lambda',lambda,'.RData')
 source(paste0(WORK_DIR,"/src/utility/utility.R"))
 source(paste0(WORK_DIR,"/src/experiments/covariance_estimation/gibbs.R"))
 result_dir=paste0(WORK_DIR,"/results/covariance_estimation/dtm/")
-system(paste0('mkdir ',result_dir,'gibbs/'))
-system(paste0('mkdir ',result_dir,'clrcov/'))
-system(paste0('mkdir ',result_dir,'SSS/'))
 datadir=paste0(WORK_DIR,'/cache/dtm/')
-if (!file.exists(paste0(result_dir,'gibbs/',filenam))){
+if (!file.exists(paste0(result_dir,filenam))){
   input_data=readRDS(paste0(WORK_DIR,"/cache/ps_sim.RData"))
   tree=input_data$tree
   dat_i=readRDS(paste0(datadir,'sim',i,'.RData'))
@@ -37,10 +34,6 @@ if (!file.exists(paste0(result_dir,'gibbs/',filenam))){
     warning('error')
     t<-try(gibbs1<-gibbs_glasso(niter=niter,YL=t(YL),Y=t(Y),r=1,s=0.01,SSS=SSS,lambda=lambda))
   }
-  if (SSS>1){
-    saveRDS(SSS,paste0(result_dir,'SSS/',filenam))
-  }
-  saveRDS(gibbs1,paste0(result_dir,'gibbs/',filenam))
   samp_seq=ceiling(niter/2):niter
   MU=gibbs1$MU
   OMEGA=gibbs1$OMEGA
@@ -50,7 +43,7 @@ if (!file.exists(paste0(result_dir,'gibbs/',filenam))){
   rm(gibbs1)
   st2<-system.time(clrcov_ltn<-clrcov_sim_log(mu,sigma,tree,nmc,F,NULL))
   if (sum(is.na(clrcov_ltn))+sum(is.infinite(clrcov_ltn))==0){
-    saveRDS(clrcov_ltn,paste0(result_dir,'clrcov/',filenam))
+    saveRDS(clrcov_ltn,paste0(result_dir,filenam))
   } else {
     warning('NA or Inf in clrcov')
   }
