@@ -1,6 +1,7 @@
 #!/usr/bin/env Rscript
 
 library(data.tree)
+library(phyloseq)
 argv=commandArgs(TRUE)
 WORK_DIR=argv[1]
 lambda=argv[2]
