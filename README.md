@@ -1,17 +1,12 @@
 # LTN_analysis
-LTN paper.
 
 Please set the working directory before running `run.sh`.
 ```bash
 export WORK_DIR=.../LTN_analysis/
-```
-To reproduce the results in the paper, run
-```bash
 $WORK_DIR/run.sh 100 1000
 ```  
-The folder `results/covariance_estimation/risk` contains the results from LTN presented in the covariance estimation section of the paper and in the corresponding supplements. 
-For comparison with COAT, see https://github.com/yuanpeicao/COAT.git
+Results from LTN for the numerical examples of covariance estimation are stored in the folder `results/covariance_estimation/risk`. The folder `results/cross_group_comparison/single_otu/summary` and `results/cross_group_comparison/multi_otu/summary` contain results in the cross-group comparison examples, including the PJAPs and labels for making the ROC curves as well as the ROC plots. We fitted COAT and DirFactor to simulated datasets with code from https://github.com/yuanpeicao/COAT.git and https://github.com/boyuren158/DirFactor-fix respectively. 
+The plots and tables shown in the application section are stored in `results/cross_group_comparison/application/`. 
 
-For comparison with DirFactor, see https://github.com/boyuren158/DirFactor-fix
 
 
