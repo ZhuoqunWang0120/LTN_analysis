@@ -49,10 +49,8 @@ pjapdir=paste0(result_dir,'/pjap/')
 sdir=paste0(result_dir,'/SSS/')
 randmodel=c('norand','diagonal','sparse')[model_index+1]
 try(system(paste0('mkdir -p ',result_dir)))
-try(system(paste0('mkdir -p ',gibbsdir)))
 try(system(paste0('mkdir -p ',pidir)))
 try(system(paste0('mkdir -p ',pjapdir)))
-try(system(paste0('mkdir -p ',sdir)))
 # filenam=paste0('i',i,'r',r,'H',h,'gm',gprior_m,randmodel,'nu',nu,'a1',a1,'a2',a2,'lambda',lambda,'iter',niter,'.RData')
 filenam=paste0('i',i,'H',h,'_',randmodel,'_lambda',lambda,'.RData')
 if (!file.exists(paste0(result_dir,'/pjap/',filenam))){
