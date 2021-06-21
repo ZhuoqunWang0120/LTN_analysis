@@ -2,6 +2,7 @@
 
 library(data.tree)
 library(phyloseq)
+library(ape)
 argv=commandArgs(TRUE)
 WORK_DIR=argv[1]
 lambda=argv[2]
