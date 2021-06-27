@@ -62,7 +62,7 @@ $WORK_DIR/src/experiments/cross_group_comparison/collect_results.R $WORK_DIR $la
 done
 
 # application
-declare -a lamvec=(0.1 1 10)
+declare -a lamvec=(1 3.1622777 10)
 for lambda in "${lamvec[@]}";do
 for i in `seq 1 9`; do
 $WORK_DIR/src/experiments/application/application.R $WORK_DIR 10000 $i 2 $lambda
